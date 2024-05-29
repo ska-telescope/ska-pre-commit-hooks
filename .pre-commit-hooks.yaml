@@ -1,0 +1,46 @@
+# Commit format hooks
+- id: branch ticket id
+  name: branch ticket ID
+  description: git branch ticket ID format
+  stages: [pre-commit, pre-push]
+  language: script
+  entry: ./lint-branch-name.sh
+  always_run: true
+  pass_filenames: false
+- id: commit msg ticket id
+  name: commit message ticket ID
+  description: commit messsage ticket ID format
+  stages: [commit-msg]
+  language: script
+  entry: ./lint-commit-msg.sh
+
+# Poetry hooks
+- id: isort
+  name: Poetry isort
+  description: Runs `isort` using the activated poetry environment.
+  entry: poetry run isort --check-only
+  language: system
+  types_or: [cython, pyi, python]
+  args: ['--filter-files']
+  require_serial: true
+- id: black
+  name: Poetry black
+  description: Runs `isort` using the activated poetry environment.
+  entry: poetry run black --check
+  language: system
+  types_or: [python, pyi]
+  require_serial: true
+- id: flake8
+  name: Poetry flake8
+  description: Runs `flake8` using the activated poetry environment.
+  entry: poetry run flake8
+  language: system
+  types: [python]
+  require_serial: true
+- id: pylint
+  name: Poetry pylint
+  description: Runs `pylint` using the activated poetry environment.
+  entry: poetry run pylint
+  language: system
+  types: [python]
+  require_serial: true

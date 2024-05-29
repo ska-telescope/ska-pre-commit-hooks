@@ -1,0 +1,10 @@
+repos:
+- repo: https://gitlab.com/calgray/ska-sdp-lint-rules
+  rev: efd3faba1a4c14935377e3aa404b20c291d7c7f6
+  hooks:
+  - id: isort
+  - id: black
+  - id: flake8
+  - id: pylint
+  - id: branch ticket id
+  - id: commit msg ticket id
