@@ -1,6 +1,6 @@
 repos:
-- repo: https://gitlab.com/calgray/ska-sdp-lint-rules
-  rev: efd3faba1a4c14935377e3aa404b20c291d7c7f6
+- repo: https://gitlab.com/calgray/ska-pre-commit-hooks
+  rev: 13a5b7b0daf2916cb006870315b3d58019e5ec4a
   hooks:
   - id: isort
   - id: black

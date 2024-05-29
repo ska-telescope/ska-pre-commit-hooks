@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "ska-pre-commit-hooks"
 version = "0.0.1"
@@ -17,6 +21,7 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pre-commit = "^3.7.1"
 
 [tool.poetry.group.lint.dependencies]
 black = "^23.3.0"
@@ -46,7 +51,10 @@ enable = "DAR104"
 max-complexity = 10
 
 # E203 and W503 conflict with black
-ignore = ["E203", "W503"]
+ignore = [
+    "E203",  # Whitespace before ':' (E203)
+    "W503",  # Line break before binary operator (W503)
+]
 
 [tool.pylint.messages_control]
 disable = [
@@ -58,7 +66,3 @@ enable = ["useless-suppression"]
 [tool.pylint.similarities]
 min-similarity-lines = 7
 ignore-imports = "yes"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
