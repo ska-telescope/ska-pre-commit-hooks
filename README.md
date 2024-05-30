@@ -34,7 +34,9 @@ repos:
   hooks:
   # python lint
   - id: isort
+    args: ['--check-only']
   - id: black
+    args: ['--check']
   - id: flake8
   - id: pylint
   # jira ticket
