@@ -29,6 +29,7 @@ pytest-cov = "^4.1.0"
 flake8-docstrings = "^1.7.0"
 flake8-rst-docstrings = "^0.3.0"
 flake8-pyproject = "^1.2.3"
+
 [tool.poetry.group.docs.dependencies]
 Sphinx = "^6.2.1"
 ska-ser-sphinx-theme = "^0.1.1"
