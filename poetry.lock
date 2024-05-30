@@ -402,7 +402,7 @@ flake8 = ">=3"
 pydocstyle = ">=2.1"
 
 [[package]]
-name = "Flake8-pyproject"
+name = "flake8-pyproject"
 version = "1.2.3"
 description = "Flake8 plug-in loading the configuration from pyproject.toml"
 optional = false
@@ -1020,7 +1020,7 @@ files = [
 ]
 
 [[package]]
-name = "Sphinx"
+name = "sphinx"
 version = "6.2.1"
 description = "Python documentation generator"
 optional = false
