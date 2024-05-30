@@ -47,22 +47,22 @@ default_install_hook_types:
 - commit-msg
 ```
 
-2. Install or add `pre-commit` as a package dependency:
+3. Install or add `pre-commit` as a package dependency:
 
 ```bash
-poetry add pre-commit
+poetry add pre-commit --group lint
 poetry install
 ```
 
-3. Test selected pre-commit passes for all files:
+4. Test selected pre-commit passes for all files:
 
 ```bash
 pre-commit run --all-files
 ```
 
-4. Add the pre-commit badge to the README [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+5. Add the pre-commit badge to the README [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
-5. Commit and submit the merge request for developers to opt into git hooks.
+6. Commit and submit the merge request for developers to opt into git hooks.
 
 ## Opt-in to pre-commit hooks in development
 
