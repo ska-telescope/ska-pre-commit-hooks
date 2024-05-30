@@ -1,6 +1,7 @@
 # ska-pre-commit-hooks
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Documentation Status](https://readthedocs.org/projects/ska-telescope-ska-pre-commit-hooks/badge/?version=latest)](https://developer.skao.int/projects/ska-pre-commit-hooks/en/latest/?badge=latest)
 
 SKA [pre-commit](https://pre-commit.com/) hooks for git developer workflows.
 
@@ -16,11 +17,15 @@ pre-commit is a configurable Python tool useful for identifying simple issues wh
 * pre-rebase
 * prepare-commit-msg
 
+For further documentation check the repository `docs` folder and the [SKA development portal](https://developer.skatelescope.org/projects/ska-pre-commit-hooks/en/latest/index.html "SKA Developer Portal: ska-pre-commit-hooks documentation")
+
 ## Repository Setup Instructions
 
-In a seperate checked-out Python repository using poetry:
+To add hooks support to an SKA Python repository:
 
-1. add the following to a `.pre-commit-config.yaml` file in the root project directory:
+1. Checkout the Python repository on a local machine.
+
+2. Add the following to a `.pre-commit-config.yaml` file in the root project directory:
 
 ```yaml
 repos:
@@ -53,7 +58,9 @@ poetry install
 pre-commit run --all-files
 ```
 
-4. Commit and submit the merge request for developers to opt into git hooks.
+4. Add the pre-commit badge to the README [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
+5. Commit and submit the merge request for developers to opt into git hooks.
 
 ## Opt-in to pre-commit hooks in development
 
@@ -101,12 +108,3 @@ To opt-out from git hook integration, pre-commit hooks can be uninstalled for a 
 ```bash
 pre-commit uninstall
 ```
-
-## Documentation
-
-[![Documentation Status](https://readthedocs.org/projects/ska-telescope-ska-pre-commit-hooks/badge/?version=latest)](https://developer.skao.int/projects/ska-pre-commit-hooks/en/latest/?badge=latest)
-
-The documentation for this project, including how to get started with it, can be found in the `docs` folder, or browsed in the SKA development portal:
-
-* [ska-pre-commit-hooks documentation](https://developer.skatelescope.org/projects/ska-pre-commit-hooks/en/latest/index.html "SKA Developer Portal: ska-pre-commit-hooks documentation")
-
