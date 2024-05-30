@@ -24,8 +24,8 @@ In a seperate checked-out Python repository using poetry:
 
 ```yaml
 repos:
-- repo: https://gitlab.com/calgray/ska-pre-commit-hooks
-  rev: 89d32784e5bdb24dc151939c833eb285567ef2ea
+- repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
+  rev: 6618b44aa664df4826bdffcbd48c320e5ed7c4dc
   hooks:
   # python lint
   - id: isort

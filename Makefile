@@ -2,6 +2,7 @@ include .make/base.mk
 include .make/python.mk
 
 DOCS_SPHINXOPTS = -n -W --keep-going
+PYTHON_LINE_LENGTH = 88
 
 docs-pre-build:
 	poetry config virtualenvs.create false
@@ -9,4 +10,4 @@ docs-pre-build:
 
 .PHONY: docs-pre-build
 
-PYTHON_LINE_LENGTH = 88
+
