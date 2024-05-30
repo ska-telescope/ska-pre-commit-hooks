@@ -7,8 +7,13 @@ license= "BSD-3-Clause"
 readme = "README.md"
 
 [[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[[tool.poetry.source]]
 name = 'skao'
 url = 'https://artefact.skao.int/repository/pypi-internal/simple'
+priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = "^3.10"
