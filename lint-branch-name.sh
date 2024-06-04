@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-BRANCH_NAME_REGEX="^[a-z]{3}-[0-9]+(-[0-9A-Za-z]+)*$"
+BRANCH_NAME_REGEX="^[a-z]{3,}-[0-9]+(-[0-9A-Za-z]+)*$"
 
 if ! [[ $BRANCH_NAME =~ $BRANCH_NAME_REGEX ]]
 then

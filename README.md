@@ -5,7 +5,7 @@
 
 SKA [pre-commit](https://pre-commit.com/) hooks for git developer workflows.
 
-pre-commit is a configurable Python tool useful for identifying simple issues when committing changes and before submission to code review. This repository provides a central location for pre-commit hook definitions for developers to choose from in ska Python projects. pre-commit works for all available git hooks (not just limited to pre-commit):
+pre-commit is a configurable Python tool useful for identifying simple issues when committing changes and before submission to code review. This repository provides a central location for pre-commit hook definitions for developers to choose from in SKA Python projects. pre-commit works for all available git hooks (not just limited to pre-commit):
 * commit-msg
 * post-checkout
 * post-commit
@@ -79,7 +79,7 @@ pre-commit install
 ### Example
 
 ```sh
->>> git commit -m "ABC-123 commit message"
+>>> git commit -m "ABC-123 Update pre-commit configuration"
 poetry isort.............................................................Passed
 poetry black.............................................................Passed
 poetry flake8............................................................Passed
