@@ -8,10 +8,20 @@ if ! [[ $BRANCH_NAME =~ $TICKET_ID_REGEX ]]; then
     echo "💥 Invalid branch name. Expected lowercase JIRA ticket prefix (e.g. abc-1234), but got '$BRANCH_NAME'"
     exit 1
 fi
-BRANCH_TICKET_ID=${BASH_REMATCH[1]}
 
-PATTERN="^${BRANCH_TICKET_ID^^}"
-if ! [[ "$COMMIT_MSG" =~ $PATTERN ]]; then
-  echo "💥 Invalid commit message. Expected JIRA ticket pattern '$PATTERN' in commit message, but got '$COMMIT_MSG'"
-  exit 1
+BRANCH_TICKET_ID=${BASH_REMATCH[1]}
+TICKET_PATTERN="^${BRANCH_TICKET_ID^^}"
+MERGE_PATTERN="$TICKET_PATTERN|^Merge branch ";
+MERGE_FILE=.git/MERGE_HEAD;
+
+if ! [[ -f $MERGE_FILE ]]; then
+    if ! [[ "$COMMIT_MSG" =~ $TICKET_PATTERN ]]; then
+        echo "💥 Invalid commit message. Expected pattern '$TICKET_PATTERN' in commit message, but got '$COMMIT_MSG'"
+        exit 1
+    fi
+else
+    if ! [[ "$COMMIT_MSG" =~ $MERGE_PATTERN ]]; then
+        echo "💥 Invalid merge commit message. Expected pattern '$MERGE_PATTERN' in commit message, but got '$COMMIT_MSG'"
+        exit 1
+    fi
 fi
