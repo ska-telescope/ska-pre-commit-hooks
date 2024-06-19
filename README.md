@@ -1,99 +1,112 @@
 # ska-pre-commit-hooks
 
-## Documentation
-
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Documentation Status](https://readthedocs.org/projects/ska-telescope-ska-pre-commit-hooks/badge/?version=latest)](https://developer.skao.int/projects/ska-pre-commit-hooks/en/latest/?badge=latest)
 
-The documentation for this project, including how to get started with it, can be found in the `docs` folder, or browsed in the SKA development portal:
+SKA [pre-commit](https://pre-commit.com/) hooks for git developer workflows.
 
-* [ska-pre-commit-hooks documentation](https://developer.skatelescope.org/projects/ska-pre-commit-hooks/en/latest/index.html "SKA Developer Portal: ska-pre-commit-hooks documentation")
+pre-commit is a configurable Python tool useful for identifying simple issues when committing changes and before submission to code review. This repository provides a central location for pre-commit hook definitions for developers to choose from in SKA Python projects. pre-commit works for all available git hooks (not just limited to pre-commit):
+* commit-msg
+* post-checkout
+* post-commit
+* post-merge
+* post-rewrite
+* pre-commit
+* pre-merge-commit
+* pre-push
+* pre-rebase
+* prepare-commit-msg
 
-## Getting started
+For further documentation check the repository `docs` folder and the [SKA development portal](https://developer.skatelescope.org/projects/ska-pre-commit-hooks/en/latest/index.html "SKA Developer Portal: ska-pre-commit-hooks documentation")
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Repository Setup Instructions
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+To add hooks support to an SKA Python repository:
 
-## Add your files
+1. Checkout the Python repository on a local machine.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+2. Add the following to a `.pre-commit-config.yaml` file in the root project directory:
 
+```yaml
+repos:
+- repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
+  rev: 6618b44aa664df4826bdffcbd48c320e5ed7c4dc
+  hooks:
+  # python lint
+  - id: isort
+    args: ['--check-only']
+  - id: black
+    args: ['--check']
+  - id: flake8
+  - id: pylint
+  # jira ticket
+  - id: branch ticket id
+  - id: commit msg ticket id
+default_install_hook_types:
+- pre-commit
+- commit-msg
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks.git
-git branch -M main
-git push -uf origin main
+
+3. Install or add `pre-commit` as a package dependency:
+
+```bash
+poetry add pre-commit --group lint
+poetry install
 ```
 
-## Integrate with your tools
+4. Test selected pre-commit passes for all files:
 
-- [ ] [Set up project integrations](https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks/-/settings/integrations)
+```bash
+pre-commit run --all-files
+```
 
-## Collaborate with your team
+5. Add the pre-commit badge to the README [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+6. Commit and submit the merge request for developers to opt into git hooks.
 
-## Test and Deploy
+## Opt-in to pre-commit hooks in development
 
-Use the built-in continuous integration in GitLab.
+Install hooks for a cloned repo on developer environments wishing to use pre-commit hooks:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Install hooks
 
-***
+```bash
+pre-commit install
+```
 
-# Editing this README
+`git commit` will now automatically run hooks for staged changes and commit messages.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Example
 
-## Suggestions for a good README
+```sh
+>>> git commit -m "ABC-123 Update pre-commit configuration"
+poetry isort.............................................................Passed
+poetry black.............................................................Passed
+poetry flake8............................................................Passed
+poetry pylint............................................................Passed
+branch ticket ID.........................................................Passed
+commit message ticket ID.................................................Passed
+[abc-123 88dfe4c] ABC-123 commit message
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+For a detailed description of pre-commit use cases see https://pre-commit.com
 
-## Name
-Choose a self-explaining name for your project.
+## Opt-out of pre-commit hooks in development
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Commit hooks can be explicity skipped by using the `--no-verify` option.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Example
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```sh
+>>> git commit -m "unchecked commit" --no-verify
+[abc-123 88dfe4c] unchecked commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+### Uninstall hooks
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+To opt-out from git hook integration, pre-commit hooks can be uninstalled for a cloned repo:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```bash
+pre-commit uninstall
+```

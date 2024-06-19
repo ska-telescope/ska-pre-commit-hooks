@@ -1,0 +1,17 @@
+repos:
+- repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
+  rev: 6618b44aa664df4826bdffcbd48c320e5ed7c4dc
+  hooks:
+  # python lint
+  - id: isort
+    args: [--check-only]
+  - id: black
+    args: [--check]
+  - id: flake8
+  - id: pylint
+  # jira ticket
+  - id: branch ticket id
+  - id: commit msg ticket id
+default_install_hook_types:
+- pre-commit
+- commit-msg

@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "ska-pre-commit-hooks"
 version = "0.0.1"
@@ -17,8 +21,9 @@ priority = "supplemental"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pre-commit = "^3.7.1"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.group.lint.dependencies]
 black = "^23.3.0"
 flake8 = "^6.0.0"
 isort = "^5.12.0"
@@ -31,12 +36,19 @@ flake8-rst-docstrings = "^0.3.0"
 flake8-pyproject = "^1.2.3"
 
 [tool.poetry.group.docs.dependencies]
-Sphinx = "^6.2.1"
+sphinx = "^6.2.1"
 ska-ser-sphinx-theme = "^0.1.1"
 sphinx-autodoc-typehints = "^1.23.0"
 
 [tool.pytest.ini_options]
 addopts = "-v"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.black]
+line-length = 88
 
 [tool.flake8]
 docstring-style = "sphinx"
@@ -44,9 +56,13 @@ rst-directives = "literalinclude"
 rst-roles = ["py:attr", "py:class", "py:const", "py:exc", "py:func", "py:meth", "py:mod"]
 enable = "DAR104"
 max-complexity = 10
+max-line-length = 88
 
 # E203 and W503 conflict with black
-ignore = ["E203", "W503"]
+ignore = [
+    "E203",  # Whitespace before ':' (E203)
+    "W503",  # Line break before binary operator (W503)
+]
 
 [tool.pylint.messages_control]
 disable = [
@@ -54,11 +70,9 @@ disable = [
     "fixme",
 ]
 enable = ["useless-suppression"]
+max-line-length = 88
+ignore-patterns="conf.py$"
 
 [tool.pylint.similarities]
 min-similarity-lines = 7
 ignore-imports = "yes"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

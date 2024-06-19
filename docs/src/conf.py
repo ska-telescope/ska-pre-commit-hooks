@@ -18,7 +18,7 @@ extensions = [
 exclude_patterns = []
 
 html_css_files = [
-    'css/custom.css',
+    "css/custom.css",
 ]
 
 html_theme = "ska_ser_sphinx_theme"
@@ -27,7 +27,7 @@ html_theme_options = {}
 # autodoc_mock_imports = [
 # ]
 
-intersphinx_mapping = {'python': ('https://docs.python.org/3.10', None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3.10", None)}
 
 nitpicky = True
 
