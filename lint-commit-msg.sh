@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 ARGS=$1
 COMMIT_MSG=$(head -n1 "$ARGS")
-TICKET_ID_REGEX="^([a-z]{3}-[0-9]+)"
+TICKET_ID_REGEX="^([a-z]{3,}-[0-9]+)"
 
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 if ! [[ $BRANCH_NAME =~ $TICKET_ID_REGEX ]]; then
