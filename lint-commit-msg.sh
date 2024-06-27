@@ -10,7 +10,7 @@ if ! [[ $BRANCH_NAME =~ $TICKET_ID_REGEX ]]; then
 fi
 
 BRANCH_TICKET_ID=${BASH_REMATCH[1]}
-TICKET_PATTERN="^${BRANCH_TICKET_ID^^}"
+TICKET_PATTERN=$(echo "^${BRANCH_TICKET_ID}" | tr "[:lower:]" "[:upper:]")
 MERGE_PATTERN="$TICKET_PATTERN|^Merge branch ";
 MERGE_FILE=.git/MERGE_HEAD;
 
