@@ -4,9 +4,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "ska-pre-commit-hooks"
-version = "0.0.1"
+version = "0.1.0"
 description = "SKA pre-commit hooks for git"
-authors = ["Callan Gray <callan.gray@@icrar.org>"]
+authors = ["Callan Gray <callan.gray@icrar.org>"]
 license= "BSD-3-Clause"
 readme = "README.md"
 
@@ -36,8 +36,8 @@ flake8-rst-docstrings = "^0.3.0"
 flake8-pyproject = "^1.2.3"
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^6.2.1"
-ska-ser-sphinx-theme = "^0.1.1"
+sphinx = "^7.3.7"
+ska-ser-sphinx-theme = ">=0.2.0"
 sphinx-autodoc-typehints = "^1.23.0"
 
 [tool.pytest.ini_options]
