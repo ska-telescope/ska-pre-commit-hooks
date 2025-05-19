@@ -2,8 +2,13 @@
 ARGS=$1
 COMMIT_MSG=$(head -n1 "$ARGS")
 TICKET_ID_REGEX="^([a-z]{3}-[0-9]+)|(Merge branch )"
-
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ $BRANCH_NAME == "HEAD" ]]; then
+    echo "ℹ️ Skipping branch name check: currently in detached HEAD (e.g., rebase or amend)"
+    exit 0
+fi
+
 if ! [[ $BRANCH_NAME =~ $TICKET_ID_REGEX ]]; then
     echo "💥 Invalid branch name. Expected lowercase JIRA ticket prefix (e.g. abc-1234), but got '$BRANCH_NAME'"
     exit 1
