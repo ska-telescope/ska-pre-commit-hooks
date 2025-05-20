@@ -1,6 +1,6 @@
 repos:
 - repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
-  rev: 0.1.0
+  rev: 44a6719a
   hooks:
   # python lint
   - id: isort
@@ -11,15 +11,7 @@ repos:
   - id: pylint
   # jira ticket
   - id: branch ticket id
-  # - id: commit msg ticket id
-- repo: local
-  hooks:
   - id: commit msg ticket id
-    name: commit message ticket ID
-    description: commit messsage ticket ID format
-    stages: [commit-msg, pre-push]
-    language: script
-    entry: ./lint-commit-msg.sh
 default_install_hook_types:
 - pre-commit
 - commit-msg
