@@ -45,6 +45,6 @@
 - id: commit msg ticket id
   name: commit message ticket ID
   description: commit messsage ticket ID format
-  stages: [commit-msg]
+  stages: [commit-msg, pre-push]
   language: script
   entry: ./lint-commit-msg.sh
