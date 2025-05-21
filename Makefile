@@ -10,4 +10,6 @@ docs-pre-build:
 
 .PHONY: docs-pre-build
 
-
+bash-test:
+	bash tests/unit/test_lint_branch_name.sh
+	bash tests/unit/test_lint_commit_msg.sh

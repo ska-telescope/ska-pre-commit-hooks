@@ -1,6 +1,6 @@
 repos:
 - repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
-  rev: 44a6719a
+  rev: d409641f
   hooks:
   # python lint
   - id: isort

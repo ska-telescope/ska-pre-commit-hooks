@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TICKET_ID_REGEX="^([a-z]{3}-[0-9]+)|(Merge branch )"
+TICKET_ID_REGEX="^([a-z]{3,}-[0-9]+)"
 
 if [ -n "$PRE_COMMIT_TO_REF" ]; then
     # Execute push logic
@@ -12,7 +12,7 @@ if [ -n "$PRE_COMMIT_TO_REF" ]; then
 
     # Determine expected message pattern
     BRANCH_TICKET_ID=${BASH_REMATCH[1]}
-    PATTERN="^${BRANCH_TICKET_ID^^}"
+    PATTERN="^${BRANCH_TICKET_ID^^}|(Merge branch )"
 
     # Identify all commits that haven't been pushed yet
     COMMIT_RANGE="$PRE_COMMIT_FROM_REF..$PRE_COMMIT_TO_REF"
@@ -51,7 +51,7 @@ else
 
     # Determine expected message pattern
     BRANCH_TICKET_ID=${BASH_REMATCH[1]}
-    PATTERN="^${BRANCH_TICKET_ID^^}"
+	PATTERN="^${BRANCH_TICKET_ID^^}|(Merge branch )"
 
     # Validate message
     ARGS=$1
