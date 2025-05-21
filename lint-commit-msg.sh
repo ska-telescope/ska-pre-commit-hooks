@@ -13,7 +13,7 @@ if [[ "$BRANCH_NAME" =~ $BRANCH_NAME_REGEX ]]; then
 fi
 
 if [ -n "$PRE_COMMIT_TO_REF" ]; then
-    # Execute push logic
+    # Execute pre-push logic
     if ! [[ "$BRANCH_NAME" =~ $BRANCH_NAME_REGEX ]]; then
         echo "💥 Invalid branch name. Expected JIRA pattern like 'abc-1234', but got '$BRANCH_NAME'"
         exit 1

@@ -13,3 +13,4 @@ docs-pre-build:
 bash-test:
 	bash tests/unit/test_lint_branch_name.sh
 	bash tests/unit/test_lint_commit_msg.sh
+	bash tests/unit/test_lint_pre_push.sh
