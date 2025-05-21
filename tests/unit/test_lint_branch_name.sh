@@ -32,7 +32,7 @@ testShortId() {
 }
 
 testLongId() {
-    MSG=$(lint_branch_name "abcd-1")
+    MSG=$(lint_branch_name "abcd-10000")
     RESULT=$?
     assertEquals "" "$MSG"
     assertEquals "$RESULT" 0
@@ -40,6 +40,13 @@ testLongId() {
 
 testNaiveName() {
     MSG=$(lint_branch_name "my-branch")
+    RESULT=$?
+    assertNotEquals "" "$MSG"
+    assertEquals "$RESULT" 1
+}
+
+testPrefixedName() {
+    MSG=$(lint_branch_name "feature-abcd-10000")
     RESULT=$?
     assertNotEquals "" "$MSG"
     assertEquals "$RESULT" 1

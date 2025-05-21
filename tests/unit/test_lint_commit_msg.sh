@@ -54,11 +54,32 @@ testLongId() {
     assertEquals 0 "$RESULT"
 }
 
+testMultipleId() {
+    MSG=$(lint_commit_msg "abc-1" "ABC-2 ABC-1")
+    RESULT=$?
+    assertEquals "" "$MSG"
+    assertEquals 0 "$RESULT"
+}
+
+testInvalidMultipleId() {
+    MSG=$(lint_commit_msg "abc-1" "ABC-2 but also related to ABC-1")
+    RESULT=$?
+    assertNotEquals "" "$MSG"
+    assertEquals 1 "$RESULT"
+}
+
 testAutoMergeMsg() {
     MSG=$(lint_commit_msg "abc-123" "Merge branch 'abc-123-extra' int 'abc-123'")
     RESULT=$?
     assertEquals "" "$MSG"
     assertEquals 0 "$RESULT"
+}
+
+testMismatchMergeMsg() {
+    MSG=$(lint_commit_msg "abc-123" "ABC-234 Merge branch 'abc-123-extra' int 'abc-123'")
+    RESULT=$?
+    assertNotEquals "" "$MSG"
+    assertEquals 1 "$RESULT"
 }
 
 testMismatchIdMsg() {

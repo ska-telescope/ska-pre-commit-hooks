@@ -1,8 +1,9 @@
 #!/bin/env bash
 
-BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-BRANCH_NAME_REGEX="^[a-z]{3,}-[0-9]+(-[0-9A-Za-z]+)*$"
+BRANCH_TICKET_ID_REGEX="[a-z]{3,}-[0-9]+"
+BRANCH_NAME_REGEX="^${BRANCH_TICKET_ID_REGEX}(-[0-9A-Za-z]+)*$"
 
+BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 if [[ $BRANCH_NAME == "HEAD" ]]; then
     echo "ℹ️ Skipping branch name check: currently in detached HEAD (e.g., rebase or amend)"
     exit 0

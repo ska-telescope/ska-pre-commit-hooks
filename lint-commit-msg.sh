@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
 
-TICKET_ID_REGEX="^([a-z]{3,}-[0-9]+)"
+# define const regex
+BRANCH_TICKET_ID_REGEX="[a-z]{3,}-[0-9]+"
+BRANCH_NAME_REGEX="^($BRANCH_TICKET_ID_REGEX)(-[0-9A-Za-z]+)*$"
+COMMIT_TICKET_ID_REGEX="[A-Z]{3,}-[0-9]+"
+
+# cache common regex
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$BRANCH_NAME" =~ $BRANCH_NAME_REGEX ]]; then
+    COMMIT_TICKET_ID=${BASH_REMATCH[1]^^}
+    COMMIT_MSG_REGEX="^($COMMIT_TICKET_ID_REGEX([, ]+)?)*$COMMIT_TICKET_ID([, ]+$COMMIT_TICKET_ID_REGEX)*|^Merge branch "
+fi
 
 if [ -n "$PRE_COMMIT_TO_REF" ]; then
     # Execute push logic
-    BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-    if ! [[ "$BRANCH_NAME" =~ $TICKET_ID_REGEX ]]; then
+    if ! [[ "$BRANCH_NAME" =~ $BRANCH_NAME_REGEX ]]; then
         echo "💥 Invalid branch name. Expected JIRA pattern like 'abc-1234', but got '$BRANCH_NAME'"
         exit 1
     fi
-
-    # Determine expected message pattern
-    BRANCH_TICKET_ID=${BASH_REMATCH[1]}
-    PATTERN="^${BRANCH_TICKET_ID^^}|(Merge branch )"
 
     # Identify all commits that haven't been pushed yet
     COMMIT_RANGE="$PRE_COMMIT_FROM_REF..$PRE_COMMIT_TO_REF"
@@ -23,8 +28,8 @@ if [ -n "$PRE_COMMIT_TO_REF" ]; then
     while IFS= read -r LINE; do
         COMMIT_SHA=${LINE%% *}
         COMMIT_MSG=${LINE#* }
-        if ! [[ "$COMMIT_MSG" =~ $PATTERN ]]; then
-            echo "💥 Commit [$COMMIT_SHA] '$COMMIT_MSG' does not start with expected pattern '$PATTERN'"
+        if ! [[ "$COMMIT_MSG" =~ $COMMIT_MSG_REGEX ]]; then
+            echo "💥 Commit [$COMMIT_SHA] '$COMMIT_MSG' does not start with expected pattern '$COMMIT_MSG_REGEX'"
             ((FAIL_COUNT++))
             if [ "$FAIL_COUNT" -ge "$MAX_FAILS" ]; then
                 echo "🚫 Stopping after $MAX_FAILS failures."
@@ -39,25 +44,20 @@ if [ -n "$PRE_COMMIT_TO_REF" ]; then
     fi
 else
     # Execute commit-msg logic
-    BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
     if [[ $BRANCH_NAME == "HEAD" ]]; then
         echo "ℹ️ Skipping branch name check: currently in detached HEAD (e.g., rebase or amend)"
         exit 0
     fi
-    if ! [[ $BRANCH_NAME =~ $TICKET_ID_REGEX ]]; then
+    if ! [[ $BRANCH_NAME =~ $BRANCH_NAME_REGEX ]]; then
         echo "💥 Invalid branch name. Expected lowercase JIRA ticket prefix (e.g. abc-1234), but got '$BRANCH_NAME'"
         exit 1
     fi
 
-    # Determine expected message pattern
-    BRANCH_TICKET_ID=${BASH_REMATCH[1]}
-	PATTERN="^${BRANCH_TICKET_ID^^}|(Merge branch )"
-
     # Validate message
     ARGS=$1
     COMMIT_MSG=$(head -n1 "$ARGS")
-    if ! [[ "$COMMIT_MSG" =~ $PATTERN ]]; then
-        echo "💥 Invalid commit message. Expected JIRA ticket pattern '$PATTERN' in commit message, but got '$COMMIT_MSG'"
+    if ! [[ "$COMMIT_MSG" =~ $COMMIT_MSG_REGEX ]]; then
+        echo "💥 Invalid commit message. Expected JIRA ticket pattern '$COMMIT_MSG_REGEX' in commit message, but got '$COMMIT_MSG'"
         exit 1
     fi
 fi
