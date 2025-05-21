@@ -54,6 +54,13 @@ testLongId() {
     assertEquals 0 "$RESULT"
 }
 
+testAutoMergeMsg() {
+    MSG=$(lint_commit_msg "abc-123" "Merge branch 'abc-123-extra' int 'abc-123'")
+    RESULT=$?
+    assertEquals "" "$MSG"
+    assertEquals 0 "$RESULT"
+}
+
 testMismatchIdMsg() {
     MSG=$(lint_commit_msg "abc-123-my-branch" "ABCD-123 my message")
     RESULT=$?
