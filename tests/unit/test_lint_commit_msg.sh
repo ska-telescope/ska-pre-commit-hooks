@@ -1,5 +1,5 @@
 #! /bin/sh
-TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 LINT_COMMIT_MSG_SCRIPT=$TEST_DIR/../../lint-commit-msg.sh
 
 mock_git_branch_name() {
@@ -7,7 +7,8 @@ mock_git_branch_name() {
 
   eval "
     git() {
-      if [ \"\$1\" = \"rev-parse\" ] && [ \"\$2\" = \"--abbrev-ref\" ] && [ \"\$3\" = \"HEAD\" ]; then
+      rev_parse_args=("rev-parse" "--abbrev-ref" "HEAD")
+      if [[ \"\$@\" = \"\${rev_parse_args[@]}\" ]]; then
         echo \"$branch_name\"
       else
         command git \"\$@\"
@@ -26,7 +27,7 @@ mock_commit_msg() {
 lint_commit_msg() {
     mock_git_branch_name "$1"
     local commit_msg_file=$(mock_commit_msg "$2")
-    MSG=$(bash $LINT_COMMIT_MSG_SCRIPT $commit_msg_file)
+    MSG=$($LINT_COMMIT_MSG_SCRIPT $commit_msg_file)
     local rc=$?
     rm -f "$commit_msg_file"
     echo "$MSG"
@@ -90,4 +91,4 @@ testLowercaseMsg() {
 }
 
 # run
-. shunit2
+. /usr/bin/shunit2
