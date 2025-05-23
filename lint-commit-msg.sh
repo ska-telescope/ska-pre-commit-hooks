@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # define const regex
-BRANCH_TICKET_ID_REGEX="[a-z]{3,}-[0-9]+"
+BRANCH_TICKET_ID_REGEX="[a-z]{2,}-[0-9]+"
 BRANCH_NAME_REGEX="^($BRANCH_TICKET_ID_REGEX)(-[0-9A-Za-z]+)*$"
 COMMIT_TICKET_ID_REGEX="[A-Z]{3,}-[0-9]+"
 
@@ -44,11 +44,11 @@ if [ -n "$PRE_COMMIT_TO_REF" ]; then
     fi
 else
     # Execute commit-msg logic
-    if [[ $BRANCH_NAME == "HEAD" ]]; then
+    if [[ "$BRANCH_NAME" == "HEAD" ]]; then
         echo "ℹ️ Skipping branch name check: currently in detached HEAD (e.g., rebase or amend)"
         exit 0
     fi
-    if ! [[ $BRANCH_NAME =~ $BRANCH_NAME_REGEX ]]; then
+    if ! [[ "$BRANCH_NAME" =~ $BRANCH_TICKET_ID_REGEX ]]; then
         echo "💥 Invalid branch name. Expected lowercase JIRA ticket prefix (e.g. abc-1234), but got '$BRANCH_NAME'"
         exit 1
     fi
