@@ -12,6 +12,7 @@ TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEST_FILES=(
   "test_lint_branch_name.sh"
   "test_lint_commit_msg.sh"
+  "test_lint_pre_push.sh"
 )
 
 for test_file in "${TEST_FILES[@]}"; do

@@ -7,8 +7,7 @@ mock_git_rev_parse() {
 
   eval "
     git() {
-      rev_parse_args=("rev-parse" "--abbrev-ref" "HEAD")
-      if [[ \"\$@\" = \"\${rev_parse_args[@]}\" ]]; then
+      if [ \"\$1\" = \"rev-parse\" ] && [ \"\$2\" = \"--abbrev-ref\" ] && [ \"\$3\" = \"HEAD\" ]; then
         echo \"$branch_name\"
       else
         command git \"\$@\"
