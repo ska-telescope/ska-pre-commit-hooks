@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 
 BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 BRANCH_NAME_REGEX="^[a-z]{2,}-[0-9]+(-[0-9A-Za-z]+)*$"

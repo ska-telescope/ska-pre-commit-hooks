@@ -1,4 +1,5 @@
-#! /bin/sh
+#! /bin/bash
+
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 LINT_COMMIT_MSG_SCRIPT=$TEST_DIR/../../lint-commit-msg.sh
 
@@ -7,7 +8,8 @@ mock_git_rev_parse() {
 
   eval "
     git() {
-      if [ \"\$1\" = \"rev-parse\" ] && [ \"\$2\" = \"--abbrev-ref\" ] && [ \"\$3\" = \"HEAD\" ]; then
+      rev_parse_args=("rev-parse" "--abbrev-ref" "HEAD")
+      if [[ \"\$@\" = \"\${rev_parse_args[@]}\" ]]; then
         echo \"$branch_name\"
       else
         command git \"\$@\"

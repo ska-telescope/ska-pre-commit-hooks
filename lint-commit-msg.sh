@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 BRANCH_TICKET_ID_REGEX="^([a-z]{2,}-[0-9]+)"
 
