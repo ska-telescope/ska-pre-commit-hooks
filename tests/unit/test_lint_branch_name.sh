@@ -2,7 +2,7 @@
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 LINT_BRANCH_NAME_SCRIPT=$TEST_DIR/../../lint-branch-name.sh
 
-mock_git_branch_name() {
+mock_git_rev_parse() {
   local branch_name="$1"
 
   eval "
@@ -18,7 +18,7 @@ mock_git_branch_name() {
 }
 
 lint_branch_name() {
-    mock_git_branch_name "$1"
+    mock_git_rev_parse "$1"
     MSG=$(. $LINT_BRANCH_NAME_SCRIPT)
     local rc=$?
     echo "$MSG"

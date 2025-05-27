@@ -2,7 +2,7 @@
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 LINT_COMMIT_MSG_SCRIPT=$TEST_DIR/../../lint-commit-msg.sh
 
-mock_git_branch_name() {
+mock_git_rev_parse() {
   local branch_name="$1"
 
   eval "
@@ -25,7 +25,13 @@ mock_commit_msg() {
 }
 
 lint_commit_msg() {
-    mock_git_branch_name "$1"
+    # Run `lint-commit-msg.sh` at pre-commit stage mocking the specified arguments. 
+    #
+    # Arguments:
+    #   $1 - branch name
+    #   $2 - commit message
+
+    mock_git_rev_parse "$1"
     local commit_msg_file=$(mock_commit_msg "$2")
     MSG=$($LINT_COMMIT_MSG_SCRIPT $commit_msg_file)
     local rc=$?
