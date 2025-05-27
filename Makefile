@@ -11,4 +11,4 @@ docs-pre-build:
 .PHONY: docs-pre-build
 
 shell-test:
-	/bin/sh tests/unit/run_shunit2.sh
+	bash tests/unit/run_shunit2.sh
