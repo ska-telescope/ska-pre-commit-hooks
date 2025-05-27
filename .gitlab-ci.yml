@@ -21,3 +21,11 @@ include:
     file: 'gitlab-ci/includes/release.gitlab-ci.yml'
   - project: 'ska-telescope/templates-repository'
     file: 'gitlab-ci/includes/finaliser.gitlab-ci.yml'
+
+bash-test:
+  stage: test
+  before_script:
+    - apt-get update
+    - apt-get install -y shunit2
+  script:
+    - make bash-test

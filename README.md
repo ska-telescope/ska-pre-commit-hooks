@@ -71,7 +71,7 @@ Install hooks for a cloned repo on developer environments wishing to use pre-com
 ### Install hooks
 
 ```bash
-pre-commit install
+pre-commit install --allow-missing-config
 ```
 
 `git commit` will now automatically run hooks for staged changes and commit messages.
