@@ -29,3 +29,21 @@ shell-test:
     - apt-get install -y shunit2 zsh
   script:
     - make shell-test
+
+changed-files-pre-commit:
+  stage: lint
+  before_script:
+    - pip install pre-commit
+  script:
+    - 'echo "Fetching target branch: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME"'
+    - git fetch origin "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - |
+      CHANGED_FILES=$(git diff --name-only origin/"$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"...HEAD || true)
+      if [ -z "$CHANGED_FILES" ]; then
+        echo "No files to check."
+      else
+        echo "CHANGED_FILES=($CHANGED_FILES)"
+        echo "$CHANGED_FILES" | xargs pre-commit run --files
+      fi
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

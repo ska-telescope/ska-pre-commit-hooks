@@ -1,1 +1,1 @@
-"""Unit test package for ska_pre_commit_hooks."""
+"""Unit test package for ska-pre-commit-hooks."""
