@@ -1,4 +1,5 @@
-#! /bin/sh
+#! /bin/bash
+
 TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LINT_COMMIT_MSG_SCRIPT=$TEST_DIR/../../lint-commit-msg.sh
 

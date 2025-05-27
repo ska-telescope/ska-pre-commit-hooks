@@ -1,4 +1,5 @@
-#! /bin/sh
+#! /bin/bash
+
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 LINT_BRANCH_NAME_SCRIPT=$TEST_DIR/../../lint-branch-name.sh
 
@@ -18,7 +19,7 @@ mock_git_rev_parse() {
 }
 
 lint_branch_name() {
-    # Run `lint-branch-name.sh` mocking the specified arguments. 
+    # Run `lint-branch-name.sh` mocking the specified arguments.
     #
     # Arguments:
     #   $1 - branch name
