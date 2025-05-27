@@ -24,10 +24,8 @@ for test_file in "${TEST_FILES[@]}"; do
   for shell in "${SHELLS[@]}"; do
     if [ -x "$shell" ]; then
       echo "=== Running with $shell ==="
-    
+
       if [ "$shell" = "/bin/zsh" ]; then
-        # Run the shell interactively, defining the array
-        # and sourcing test file in same session
         "$shell" -c '
           setopt shwordsplit
           SHUNIT_PARENT=$0

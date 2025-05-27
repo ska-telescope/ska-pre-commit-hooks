@@ -26,7 +26,7 @@ mock_commit_msg() {
 }
 
 lint_commit_msg() {
-    # Run `lint-commit-msg.sh` at pre-commit stage mocking the specified arguments. 
+    # Run `lint-commit-msg.sh` at pre-commit stage mocking the specified arguments.
     #
     # Arguments:
     #   $1 - branch name
