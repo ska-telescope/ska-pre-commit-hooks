@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # define const regex
 BRANCH_TICKET_ID_REGEX="[a-z]{2,}-[0-9]+"
