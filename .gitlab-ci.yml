@@ -33,36 +33,23 @@ shell-test:
 changed-files-pre-commit:
   extends: python-lint
   stage: lint
-  before_script:
-    - poetry config virtualenvs.in-project true
-    - echo "python-build Setting.. poetry config virtualenvs.create $POETRY_CONFIG_VIRTUALENVS_CREATE"
-    - poetry config virtualenvs.create $POETRY_CONFIG_VIRTUALENVS_CREATE
-    - |
-      if [[ -f pyproject.toml ]]; then
-        if [[ -n $CI_POETRY_VERSION ]] && [[ $(poetry --version) != *$CI_POETRY_VERSION* ]]; then
-          echo "python-lint: Updating poetry to $CI_POETRY_VERSION";
-          pipx uninstall poetry && pipx install poetry==$CI_POETRY_VERSION;
-        fi;
-
-        echo "python-lint: Installing with poetry";
-        time poetry install --all-extras;
-      else
-        if  [[ -f requirements.txt ]]; then
-          echo "python-lint: Installing with pip";
-          time pip3 install -r requirements.txt;
-        fi;
-      fi;
-    - poetry run pip install pre-commit
   script:
+    - poetry run pip install pre-commit
     - 'echo "Fetching target branch: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME"'
     - git fetch origin "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
     - |
       CHANGED_FILES=$(git diff --name-only origin/"$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"...HEAD || true)
-      if [ -z "$CHANGED_FILES" ]; then
-        echo "No files to check."
-      else
-        echo "CHANGED_FILES=$CHANGED_FILES"
-        echo "$CHANGED_FILES" | xargs pre-commit run --files
-      fi
+      echo "CHANGED_FILES=${CHANGED_FILES[@]}"
+      echo "$CHANGED_FILES" | xargs pre-commit run --files
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+all-files-pre-commit:
+  extends: python-lint
+  stage: lint
+  script:
+    - poetry run pip install pre-commit
+    - pre-commit run --all-files
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  allow_failure: true
