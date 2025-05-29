@@ -27,7 +27,7 @@ shell-test:
   image: $SKA_K8S_TOOLS_DOCKER_BUILDER_IMAGE
   before_script:
     - apt-get update
-    - apt-get install -y bats bash zsh dash ksh mksh
+    - apt-get install -y bats bats-assert bash zsh dash ksh mksh
   script:
     - make shell-test
 

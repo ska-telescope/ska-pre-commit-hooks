@@ -11,13 +11,10 @@ docs-pre-build:
 
 .PHONY: docs-pre-build
 
-shell-test: bash-test zsh-test dash-test ksh-test mksh-test
+shell-test: bash-test
 
 bash-test:
 	BATS_SHELL=/bin/bash bats $(BATS_TESTS)
-
-zsh-test:
-	BATS_SHELL=/bin/zsh bats $(BATS_TESTS)
 
 dash-test:
 	BATS_SHELL=/bin/dash bats $(BATS_TESTS)

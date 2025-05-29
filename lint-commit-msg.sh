@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # define const regex
 BRANCH_TICKET_ID_REGEX="[a-z]{2,}-[0-9]+"
 BRANCH_NAME_REGEX="^($BRANCH_TICKET_ID_REGEX)(-[0-9A-Za-z]+)*$"
-COMMIT_TICKET_ID_REGEX="[A-Z]{3,}-[0-9]+"
+COMMIT_TICKET_ID_REGEX="[A-Z]{2,}-[0-9]+"
 
 # cache common regex
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
