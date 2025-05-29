@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 BRANCH_TICKET_ID_REGEX='[a-z]{2,}-[0-9]+'
 BRANCH_NAME_REGEX="^${BRANCH_TICKET_ID_REGEX}(-[0-9A-Za-z]+)*$"

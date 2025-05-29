@@ -6,7 +6,6 @@ load '/usr/lib/bats/bats-assert/load'
 setup() {
   TEST_DIR="$(cd "$(dirname "$BATS_TEST_FILENAME")" && pwd)"
   LINT_COMMIT_MSG_SCRIPT="$TEST_DIR/../../lint-commit-msg.sh"
-  export PRE_COMMIT_TO_REF=1
 }
 
 lint_pre_push() {
@@ -21,6 +20,7 @@ lint_pre_push() {
 
   env MOCK_GIT_REV_PARSE="$branch_name" \
       MOCK_GIT_LOG="$commit_id $commit_msg" \
+      PRE_COMMIT_TO_REF=1 \
       PATH="$TEST_DIR/../mocks:$PATH" \
       "$BATS_SHELL" "$LINT_COMMIT_MSG_SCRIPT"
 }
@@ -32,12 +32,14 @@ lint_pre_push() {
 
   run env MOCK_GIT_REV_PARSE="$branch_name" \
       MOCK_GIT_LOG="$commit_id $commit_msg" \
+      PRE_COMMIT_TO_REF=1 \
       PATH="$TEST_DIR/../mocks:$PATH" \
       git rev-parse --abbrev-ref HEAD
   assert_equal "$output" "$branch_name"
 
   run env MOCK_GIT_REV_PARSE="$branch_name" \
       MOCK_GIT_LOG="$commit_id $commit_msg" \
+      PRE_COMMIT_TO_REF=1 \
       PATH="$TEST_DIR/../mocks:$PATH" \
       git log --format="%h %s"
   assert_equal "$output" "$commit_id $commit_msg"

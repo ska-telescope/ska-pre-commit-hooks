@@ -33,8 +33,8 @@ lint_branch_name() {
 
 @test "HEAD is invalid but exits 0" {
   run lint_branch_name "HEAD"
-  [ "$output" != "" ]
   assert_success
+  assert_not_equal "$output" ""
 }
 
 @test "Naive name is invalid and fails" {
