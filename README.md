@@ -30,7 +30,7 @@ To add hooks support to an SKA Python repository:
 ```yaml
 repos:
 - repo: https://gitlab.com/ska-telescope/ska-pre-commit-hooks
-  rev: 0.1.0
+  rev: 0.2.0
   hooks:
   # python lint
   - id: isort
