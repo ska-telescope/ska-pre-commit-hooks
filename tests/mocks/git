@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# exit immediately on error and unset variable use
+set -eu
+
+if [ "$1" = "rev-parse" ] && [ "$2" = "--abbrev-ref" ]; then
+  echo "${MOCK_GIT_REV_PARSE:-}"
+elif [ "$1" = "log" ] && [ "$2" = "--format=%h %s" ]; then
+  echo "${MOCK_GIT_LOG:-}"
+else
+  echo "unknown git mock arguments: $@" >&2
+  exit 1
+fi
