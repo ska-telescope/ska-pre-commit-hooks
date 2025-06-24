@@ -1,24 +1,24 @@
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
-  hooks:
-  - id: trailing-whitespace
-  - id: end-of-file-fixer
-  - id: check-yaml
-- repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
-  rev: d409641f
-  hooks:
-  # python lint
-  - id: isort
-    args: [--check-only]
-  - id: black
-    args: [--check]
-  - id: flake8
-  - id: pylint
-  # jira ticket
-  - id: branch ticket id
-  - id: commit msg ticket id
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+  - repo: https://gitlab.com/ska-telescope/templates/ska-pre-commit-hooks
+    rev: "49166812"
+    hooks:
+      # python lint
+      - id: isort
+        args: [--check-only]
+      - id: black
+        args: [--check]
+      - id: flake8
+      - id: pylint
+      # jira ticket
+      - id: branch ticket id
+      - id: commit msg ticket id
 default_install_hook_types:
-- pre-commit
-- commit-msg
-- pre-push
+  - pre-commit
+  - commit-msg
+  - pre-push
